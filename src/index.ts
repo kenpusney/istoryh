@@ -62,6 +62,7 @@ class IstoryhImpl<T> implements Istoryh<T> {
     push(value: T): void {
         this.currentPosition = this.next();
         this.store.set(this.key(0), value)
+        this.store.currentPos(this.istoId, this.currentPosition);
     }
 
 }
@@ -70,7 +71,7 @@ class IstoryhImpl<T> implements Istoryh<T> {
 interface Store<T> {
     get(key: string): T | null
     set(key: string, value: T): void
-    currentPos(id: string): number
+    currentPos(id: string, value?: number): number
 }
 
 class ObjectStore<T> implements Store<T>{
@@ -84,7 +85,10 @@ class ObjectStore<T> implements Store<T>{
         this.data[key] = value
     }
 
-    currentPos(id: string): number {
+    currentPos(id: string, value?: number): number {
+        if (value) {
+            return this.currentPositon[id] = value;
+        }
         return this.currentPositon[id] || 0;
     }
 }
@@ -101,7 +105,11 @@ class LocalStorageStore<T> implements Store<T> {
         localStorage.setItem(key, JSON.stringify(value));
     }
 
-    currentPos(id: string): number {
+    currentPos(id: string, value?: number): number {
+        if (value) {
+            localStorage.setItem(`isto-pos-${id}`, JSON.stringify(value));
+            return value;
+        }
         const pos = localStorage.getItem(`isto-pos-${id}`);
         if (pos != null) {
             return JSON.parse(pos);

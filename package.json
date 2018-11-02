@@ -1,6 +1,6 @@
 {
   "name": "istoryh",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A data structure to manage histories",
   "main": "lib/index.js",
   "repository": "https://github.com/kenpusney/istoryh",
