@@ -1,0 +1,21 @@
+{
+  "name": "istoryh",
+  "version": "0.1",
+  "description": "A data structure to manage histories",
+  "main": "lib/index.js",
+  "repository": "https://github.com/kenpusney/istoryh",
+  "author": "KimmyLeo",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/chai": "^4.1.7",
+    "@types/mocha": "^5.2.5",
+    "chai": "^4.2.0",
+    "ignore-styles": "^5.0.1",
+    "mocha": "^5.2.0",
+    "ts-node": "^7.0.1",
+    "typescript": "^3.1.6"
+  },
+  "scripts": {
+    "test": "mocha -r ts-node/register -r ignore-styles src/**/*.spec.ts"
+  }
+}
