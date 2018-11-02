@@ -33,6 +33,8 @@ class IstoryhImpl<T> implements Istoryh<T> {
         this.capacity = capacity;
         this.store = store;
         this.istoId = istoId || Math.floor(Math.random() * 1000000).toString()
+
+        this.currentPosition = store.currentPos(this.istoId);
     }
     top(): T | null {
         return this.store.get(this.key(0))
@@ -68,16 +70,22 @@ class IstoryhImpl<T> implements Istoryh<T> {
 interface Store<T> {
     get(key: string): T | null
     set(key: string, value: T): void
+    currentPos(id: string): number
 }
 
 class ObjectStore<T> implements Store<T>{
     private data: { [key: string]: T } = {}
+    private currentPositon: {[key: string]: number} = {}
 
     get(key: string): T | null {
         return this.data[key]
     }    
     set(key: string, value: T): void {
         this.data[key] = value
+    }
+
+    currentPos(id: string): number {
+        return this.currentPositon[id] || 0;
     }
 }
 
@@ -91,6 +99,14 @@ class LocalStorageStore<T> implements Store<T> {
     }    
     set(key: string, value: T): void {
         localStorage.setItem(key, JSON.stringify(value));
+    }
+
+    currentPos(id: string): number {
+        const pos = localStorage.getItem(`isto-pos-${id}`);
+        if (pos != null) {
+            return JSON.parse(pos);
+        }
+        return 0;
     }
 }
 
